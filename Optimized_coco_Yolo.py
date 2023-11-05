@@ -37,6 +37,8 @@ def getallboxKeypointsData(bbox,keypoints,lefthand_kpts,righthand_kpts,foot_kpts
     # keypoints[keypoints[:, 2] == 1] = 2  (before)
     keypoints = keypoints.flatten()
     # print("keypoints : ",keypoints,len(keypoints))
+    bbox[0]=bbox[0]+bbox[2]/2
+    bbox[1]=bbox[1]+bbox[3]/2
     bboxa = [coord / width if i % 2 == 0 else coord / height for i, coord in enumerate(bbox)]
     return str(bboxa+keypoints.tolist())
 
@@ -59,6 +61,7 @@ with open('/home/sohag/Videos/coco_wholebody_val_v1.csv', 'w', newline='') as cs
         # prin(annotation['keypoints'])
         annotation_row = [
             annotation["image_id"],
+            
             image_dict[annotation["image_id"]][0],
             getallboxKeypointsData(annotation['bbox'],annotation['keypoints'],annotation['lefthand_kpts'],annotation['righthand_kpts'],
                                 annotation['foot_kpts'],image_dict[annotation["image_id"]][1],image_dict[annotation["image_id"]][2])
